@@ -27,10 +27,18 @@ VALUES
     (15, 'Auto Loan', 'Loan', 4.25, 0.00, 20000.00);
 
 --SQL--
+--MOSTRAS LOS NOMBRES DE LOS PRODUCTOS--
 select distinct product_name
 from bank_products
 order by product_name desc;
 
+--MOSTRAR LOS NOMBRES DE LOS PRODUCTOS QUE EL TIPO DE PRODUCTO SEA DE SAVING O CHEKING--
 select product_type, product_name
 from bank_products
 where product_type='Savings' or product_type='Checking';
+
+--MOSTRAR LOS PRODUCTOS DE AHORROS CON TASA DE 0.75 O MAYOR Y SIN PAGO MENSUAL--
+select product_name, product_type, interest_rate, monthly_fee
+from bank_products
+where product_type='Savings' and interest_rate>=0.75 and monthly_fee=0
+order by interest_rate desc;
