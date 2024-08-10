@@ -42,3 +42,50 @@ select product_name, product_type, interest_rate, monthly_fee
 from bank_products
 where product_type='Savings' and interest_rate>=0.75 and monthly_fee=0
 order by interest_rate desc;
+
+
+
+--TABLA DE EMPLEADOS--
+CREATE TABLE employees (
+    employee_id INTEGER PRIMARY KEY,
+    department TEXT,
+    salary DECIMAL(10, 2),
+    years_of_experience INTEGER
+);
+
+INSERT INTO employees (employee_id, department, salary, years_of_experience)
+VALUES
+    (1, 'Finance', 60000.00, 5),
+    (2, 'Marketing', 55000.00, 3),
+    (3, 'Sales', 75000.00, 8),
+    (4, 'Engineering', 80000.00, 7),
+    (5, 'HR', 50000.00, 2),
+    (6, 'Finance', 70000.00, 6),
+    (7, 'Marketing', 60000.00, 4),
+    (8, 'Sales', 85000.00, 10),
+    (9, 'Engineering', 90000.00, 9),
+    (10, 'HR', 55000.00, 3),
+    (11, 'Sales', 72000.00, 6),
+    (12, 'Sales', 80000.00, 7),
+    (13, 'Engineering', 85000.00, 8),
+    (14, 'Engineering', 92000.00, 10);
+
+--MOSTRAR LOS DEPARTAMENTOS QUE HAN GASTADO 300000 O MAS--
+--AL CAMBIAR EL NOMBRE DE LA COLUMNA MEJOR NO USAR ESPACIOS--    
+select sum(salary) as total_spent, department
+from employees
+group by department 
+having total_spent>=300000
+order by total_spent desc;
+
+--CUANTOS EMPLEADOS HAY EN CADA DEPARTAMENTO--
+select count(employee_id), department
+from employees
+group by department
+order by count(employee_id) desc;
+
+--PROMEDIO DE SALARIO GASTADO POR DEPARTAMENTO MAYOR A 70000--
+select avg(salary) as salary_spent_per_year, department
+from employees
+group by department
+having salary_spent_per_year>=70000;
