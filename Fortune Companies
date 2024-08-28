@@ -82,3 +82,13 @@ select round (avg_employee_tenure) as employee_tenure_percentage, company_id, co
 from fortune_companies
 where industry='Healthcare' and employee_tenure_percentage>=5
 order by employee_tenure_percentage desc;
+
+select sum(employees) as employees_habitants, industry, round (revenue*0.100)as revenue_percentage
+, case when revenue>=500 then 'high'
+when revenue>=300 then 'mid'
+when revenue<300 then 'low'
+end as revenue_quality
+from fortune_companies
+group by industry
+having revenue>=200 
+order by employees_habitants desc;
