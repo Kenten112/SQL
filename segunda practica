@@ -279,3 +279,19 @@ order by customers.customer_id asc;
 select customers.customer_id, customers.customer_name, customers.contact_email, shipments.shipping_method
 from customers inner join shipments on customers.customer_id = shipments.sender_id
 where shipments.shipping_method = 'Standard';
+
+
+
+
+
+
+--SQL--
+select distinct  subject, current, coursename
+from courses
+where subject = 'Economics' and current ='Yes';
+
+select title, coursename, name
+from textbooks inner join courses on textbooks.courseid = courses.courseid
+inner join authortextbooklink on textbooks.textbookid = author.textbookid
+inner join author on authortextbooklinks.authorid = author.authorid
+where subject = 'Economics' and current ='Yes';
