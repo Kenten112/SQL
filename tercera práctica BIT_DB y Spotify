@@ -1,0 +1,117 @@
+SELECT COUNT(orderid)
+FROM BIT_DB.JanSales
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID' and product = 'iPhone';
+
+select distinct BIT_DB.customers.acctnum, BIT_DB.FebSales.orderdate, BIT_DB.FebSales.orderid
+from BIT_DB.customers inner join BIT_DB.FebSales on BIT_DB.customers.order_id = BIT_DB.FebSales.orderid
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID'
+order by orderdate desc;
+
+select distinct min(price) as price, product
+from BIT_DB.JanSales
+group by product
+order by price asc
+limit 1;
+
+select distinct round (sum(price),1) as Revenue, product
+from BIT_DB.JanSales
+group by product
+having not Revenue =0
+order by Revenue desc;
+
+SELECT distinct round (sum(quantity)*price,1) as revenue
+,product
+FROM BIT_DB.JanSales
+GROUP BY product
+having not Revenue =0
+order by Revenue desc;
+
+select sum(quantity) as Quantity, round(sum(quantity)*price,1) as Revenue, product, location
+FROM BIT_DB.FebSales
+where location = '548 Lincoln St, Seattle, WA 98101'
+group by product;
+
+
+
+SELECT
+sum(Quantity),
+product,
+sum(quantity)*price as revenue
+FROM BIT_DB.FebSales
+WHERE location = '548 Lincoln St, Seattle, WA 98101'
+GROUP BY product;
+
+select round(avg(quantity)*price,1) as Revenue, count(acctnum) as buy_times, acctnum
+from BIT_DB.customers inner join BIT_DB.FebSales on BIT_DB.customers.order_id = BIT_DB.FebSales.orderID
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID'
+group by acctnum
+having buy_times>2
+order by acctnum asc;
+
+SELECT
+count(distinct cust.acctnum),
+avg(quantity*price)
+FROM BIT_DB.FebSales Feb
+LEFT JOIN BIT_DB.customers cust
+ON FEB.orderid=cust.order_id
+WHERE Feb.Quantity>2
+AND length(orderid) = 6
+AND orderid <> 'Order ID';
+
+select sum(quantity), product
+from BIT_DB.FebSales
+where location like '%Los Angeles%'
+group by product
+order by sum(quantity) desc;
+
+--primera pregunta
+SELECT distinct location, count(orderID)
+FROM BIT_DB.JanSales
+WHERE location LIKE '%NY%'
+AND length(orderid) = 6 
+AND orderid <> 'Order ID'
+GROUP BY location
+HAVING count(orderID)>2;
+
+--segunda pregunta
+select distinct sum(quantity) as Products_sold, product
+from BIT_DB.FebSales
+group by product
+having product like '%Headphones';
+
+--tercera pregunta
+select distinct round(sum(quantity*price)/count(acctnum), 1) as AVG_amount
+from BIT_DB.customers inner join BIT_DB.FebSales on BIT_DB.customers.order_id = BIT_DB.FebSales.orderID
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+
+--cuarta pregunta
+select sum(quantity)/count(acctnum)
+from BIT_DB.customers inner join BIT_DB.FebSales on BIT_DB.customers.order_id = BIT_DB.FebSales.orderID
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+
+--quinta pregunta
+select round(sum(quantity*price),1) as Revenue, product
+from BIT_DB.JanSales
+group by product
+order by Revenue desc
+limit 1;
+
+SELECT product, 
+sum(quantity*price)
+FROM BIT_DB.JanSales 
+GROUP BY product
+ORDER BY sum(quantity*price) desc 
+LIMIT 1;
+
+            --WITH--
+with top_popularity as (select artist_name, avg(popularity) as avg_popularity
+from Spotifydata
+group by artist_name)
+select artist_name, 'top star' as popularity
+from top_popularity
+where avg_popularity>=90;
