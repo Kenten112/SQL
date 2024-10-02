@@ -111,7 +111,8 @@ LIMIT 1;
             --WITH--
 with top_popularity as (select artist_name, avg(popularity) as avg_popularity
 from Spotifydata
-group by artist_name)
+group by artist_name
+)
 select artist_name, 'top star' as popularity
 from top_popularity
 where avg_popularity>=90;
