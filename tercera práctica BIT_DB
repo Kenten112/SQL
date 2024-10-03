@@ -116,3 +116,13 @@ group by artist_name
 select artist_name, 'top star' as popularity
 from top_popularity
 where avg_popularity>=90;
+
+                              ---WINDOW FUNCTIONS--
+SELECT street, safetyrating,
+AVG(safetyrating) OVER (PARTITION BY street) as average_safety_rating,
+CASE WHEN AVG(safetyrating) OVER (PARTITION BY street) >=4 THEN 'Leave As-Is'
+    WHEN AVG(safetyrating) OVER (PARTITION BY street) <2.5 THEN 'Remove'
+    ELSE 'Improvements Needed'
+    END AS 'Recommendation'
+FROM CityBikeLanes
+
