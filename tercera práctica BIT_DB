@@ -124,5 +124,19 @@ CASE WHEN AVG(safetyrating) OVER (PARTITION BY street) >=4 THEN 'Leave As-Is'
     WHEN AVG(safetyrating) OVER (PARTITION BY street) <2.5 THEN 'Remove'
     ELSE 'Improvements Needed'
     END AS 'Recommendation'
-FROM CityBikeLanes
+FROM CityBikeLanes;
+
+
+WITH safety_average_cte AS (
+    SELECT street, AVG(safetyrating) AS average_rating
+    FROM citybikelanes
+    GROUP BY street
+)
+
+SELECT 
+    street,
+    average_rating,
+    'Safe Lane' AS table_name
+FROM safety_average_cte
+WHERE average_rating >= 4;
 
